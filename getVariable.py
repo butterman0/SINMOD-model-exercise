@@ -1,7 +1,7 @@
 import numpy as np
 import netCDF4 as nc
 
-def get_variable(file_path, variable_name, position=None, layers=None, samples=None):
+def get_variable(file_path, variable_name, samples=None, layers=None, position=None):
     """
     file_path: Path to the NetCDF file
     variable_name: variable variable_name
@@ -9,6 +9,8 @@ def get_variable(file_path, variable_name, position=None, layers=None, samples=N
     position: horizontal dimensions of area to read
     layer: layer to read. I.e. which depth or depths
     sample: sample number. I.e. which moment in time (or moments)
+
+    return: variables in the order sample, layer, position_x, poosition_y
     """
     
     with nc.Dataset(file_path, 'r') as nc_file:
@@ -57,8 +59,6 @@ def get_variable(file_path, variable_name, position=None, layers=None, samples=N
             if isinstance(data_slice, np.ndarray):
                 data_slice[data_slice == fill_value] = np.nan
         
-        data_slice = data_slice * scale_factor + offset
-
-        # TODO: Rearrange variables in data slice to match function argument order
+        # data_slice = data_slice * scale_factor + offset
 
     return data_slice
