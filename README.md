@@ -1,4 +1,4 @@
-# Project Name
+# SINMOD model exercise
 
 ## Description
 
